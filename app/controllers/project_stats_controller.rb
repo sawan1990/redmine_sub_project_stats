@@ -10,6 +10,7 @@ class ProjectStatsController < ApplicationController
     @projects.each do |project|
       @projects = @projects + project.children
     end
+    
   end
 
 

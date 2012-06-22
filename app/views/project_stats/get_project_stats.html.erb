@@ -1,0 +1,35 @@
+
+<div class="new-todo">
+  <% form_tag({:url => "/projects/boot-camp-2012/get_stats"}, {:multipart => true}) do %>
+    <input type="hidden" name="project_id" value="<%=@parent_project.identifier%>"/>
+   <%= label_tag(:start_date, "Start Date: ") %> <%= select_datetime @start_date ,:prefix => :start_date %><br/>
+     <%= label_tag(:end_date, "End Date: ") %><%= select_datetime @end_date ,:prefix => :end_date %><br/>
+    <%= submit_tag "search  " %>
+  <%end%>
+</div>
+
+<table class="list">
+  <tr>
+    <th>project name</th>
+    <th>Tickets updated </th>
+    <th>Total issues</th>
+    <th>members</th>
+  </tr>
+
+
+  <%@projects.each do |project|
+    changed_issues_count = 0
+    project.issues.each do |issue|
+      changed_issues_count += 1 if @start_date <= issue.updated_on and issue.updated_on <= @end_date
+    end
+  %>
+    <tr>
+      <td><a href="/projects/<%=project.identifier-%>"><%=project.name-%></a></td>
+      <td style="text-align: center"> <%= changed_issues_count -%> </td>
+      <td style="text-align: center"><%=project.issues.count-%></td>
+      <td><%project.members.each do |member|-%>
+          <%=member.name + "," -%><%end%></td>
+    </tr>
+  <%end%>
+
+</table>

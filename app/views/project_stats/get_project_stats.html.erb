@@ -38,7 +38,7 @@ end%>
 </div>
 <h2/>
 <p/>
-<h2> The Tickets updates for <%= (@end_date-@start_date).to_i + 1-%> days and total progress</h2>
+<h2> The Tickets updates for <%= (Time.at(@end_date.to_time.to_i-@start_date.to_time.to_i)).day.to_i-1-%> days and total progress</h2>
 <p/>
 <table class="list">
   <tr>
